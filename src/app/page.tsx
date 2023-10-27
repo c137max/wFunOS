@@ -1,9 +1,9 @@
 'use client'
 
 import { useState } from "react";
-import Modal2 from "./componets/modal2";
-import Dock from "./componets/dock";
-import MyWindow from "./componets/window";
+import Modal2 from "../components/modal2";
+import Dock from "../components/dock";
+import MyWindow from "../components/window";
 
 const bgImages = [
   "images/0b3912f8f3514b6fb77779d258179e08.jpg",

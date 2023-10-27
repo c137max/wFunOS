@@ -1,5 +1,5 @@
 'use client'
-import Modal from "@/app/componets/modal"
+import Modal from "../../components/modal"
 import { useState } from "react"
 
 export default function TestPage() {
