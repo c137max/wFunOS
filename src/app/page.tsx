@@ -42,20 +42,34 @@ export default function Home() {
         console.log(`切换壁纸: ${bgImages[bgImageIndex + 1]}`)
         setBgImageIndex(bgImageIndex + 1);
       }
+      // setIsOpen((_) => false)
     }
-    setIsOpen((_) => false)
   }
 
   return (
     <div style={{ backgroundImage: ` url('${bgImages[bgImageIndex]}')` }} onContextMenuCapture={handleContextMenu} onClick={handleContextClicked} className={`bg-cover bg-center min-h-screen p-3 rounded-lg bg-blue-50 `}>
       <div className="navbar bg-base-100 rounded-full backdrop-blur-lg bg-opacity-60  top-0 w-full ">
-        网站正在积极开发中，点击鼠标右键可更换壁纸~
+
       </div>
       <main >
         {/* content */}
       </main>
-      <MyWindow>
-        窗口移动性能不佳
+      <MyWindow title="公告" width={470}>
+        <div className="text-sm space-x-1 text-clip">
+          <div>
+            网站正在积极开发，点击鼠标右键可更换壁纸(壁纸来源网络，侵删)~
+          </div>
+          <div>
+          </div>
+          <div>
+            接下来的工作:
+          </div>
+          <ul >
+            <li>1.添加菜单功能</li>
+            <li>2.完善dock显示</li>
+            <li>3.窗口可伸缩</li>
+          </ul>
+        </div>
       </MyWindow>
       <Dock className="fixed bottom-3 w-3/4"></Dock>
       <Modal2 isOpen={isOpen} x={position.x} y={position.y} onClick={handleMenuOnClick}></Modal2>
