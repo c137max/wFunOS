@@ -4,6 +4,7 @@ import { useState } from "react";
 import Modal2 from "../components/modal2";
 import Dock from "../components/dock";
 import MyWindow from "../components/window";
+import DeskIcon from "@/components/deskIcon";
 
 const bgImages = [
   "images/0b3912f8f3514b6fb77779d258179e08.jpg",
@@ -13,13 +14,28 @@ const bgImages = [
   "images/wallhaven-eymzjk.jpg"
 ]
 
+const initWondows = [
+  // {title: '公告', content: }
+]
+
 export default function Home() {
+
+  let tmp = []
+  for (let index = 0; index < 20; index++) {
+    tmp.push(index.toString())
+  }
+
   const [isOpen, setIsOpen] = useState(false);
   const [bgImageIndex, setBgImageIndex] = useState(0);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [windows, setWindows] = useState(initWondows);
+  const deskIcon = tmp;
 
   const handleContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
+    if (e.target !== e.currentTarget) {
+      return;
+    }
     setIsOpen((_) => false)
     setPosition({ x: e.pageX, y: e.pageY })
     setIsOpen((_) => true)
@@ -46,16 +62,28 @@ export default function Home() {
     }
   }
 
-  return (
-    <div style={{ backgroundImage: ` url('${bgImages[bgImageIndex]}')` }} onContextMenuCapture={handleContextMenu} onClick={handleContextClicked} className={`bg-cover bg-center min-h-screen p-3 rounded-lg bg-blue-50 `}>
-      <div className="navbar bg-base-100 rounded-full backdrop-blur-lg bg-opacity-60  top-0 w-full ">
+  // const handleIconDoubleClick = () => {
 
+  // }
+
+  return (
+    <div style={{ backgroundImage: ` url('${bgImages[bgImageIndex]}')` }} onClick={handleContextClicked} onContextMenuCapture={e => e.preventDefault()} className={`bg-cover bg-center min-h-screen p-3 rounded-lg bg-blue-50 `}>
+      <div className="h-10 bg-base-100 rounded-full backdrop-blur-lg bg-opacity-60  top-0 w-full ">
       </div>
-      <main >
-        {/* content */}
+      <main className="mt-5 mb-5" >
+        <div onClick={handleContextClicked} onContextMenuCapture={handleContextMenu} className="grid grid-rows-6 grid-flow-col gap-4 justify-start">
+          {deskIcon.map(m => <>
+            <DeskIcon key={m.toString()} name={m}>{m}</DeskIcon>
+          </>)}
+        </div>
       </main>
+      {/* <>
+        {windows.map(m => <>
+
+        </>)}
+      </> */}
       <MyWindow title="公告" width={470}>
-        <div className="text-sm space-x-1 text-clip">
+        <div className="">
           <div>
             网站正在积极开发，点击鼠标右键可更换壁纸(壁纸来源网络，侵删)~
           </div>
@@ -71,7 +99,7 @@ export default function Home() {
           </ul>
         </div>
       </MyWindow>
-      <Dock className="fixed bottom-3 w-3/4"></Dock>
+      <Dock windows={windows} className="fixed bottom-3 w-3/4"></Dock>
       <Modal2 isOpen={isOpen} x={position.x} y={position.y} onClick={handleMenuOnClick}></Modal2>
     </div>
   )

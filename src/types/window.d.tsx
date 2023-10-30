@@ -1,0 +1,5 @@
+
+
+interface WindowType {
+    title: ''
+}

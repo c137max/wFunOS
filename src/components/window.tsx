@@ -1,5 +1,5 @@
 import { MinusCircleIcon, PlusCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 
 
 interface MyWindowProps {
@@ -23,8 +23,9 @@ export default function MyWindow({ children, isActive = true, initPos = [70, 80]
         isDragging: false, // 新增一个isDragging状态用于标识是否正在拖动
         initialX: 0,
         initialY: 0,
-
     });
+    const divRef = useRef(null);
+
 
     const handleMouseDown = (e: React.MouseEvent) => {
         if (e.target !== e.currentTarget) {
@@ -75,11 +76,11 @@ export default function MyWindow({ children, isActive = true, initPos = [70, 80]
         }
     }
     return (
-        <>
+        <div ref={windowRef}>
             <div
                 style={{ top: `${pos.y}px`, left: `${pos.x}px`, height: `${height}px`, width: `${width}px` }}
-                className={`overflow-hidden overflow-x-auto  rounded border  fixed `}
-                ref={windowRef}
+                className="overflow-hidden overflow-x-auto  rounded border  fixed  resize "
+                ref={divRef}
             >
                 <div className={`${isActive ? 'bg-base-100' : 'bg-base-200'} text-white bg-opacity-60 backdrop-blur-lg p-3 inline-flex w-full`}
                     onMouseMove={handleMoveCapture} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}
@@ -90,11 +91,11 @@ export default function MyWindow({ children, isActive = true, initPos = [70, 80]
                     <MinusCircleIcon className="h-5 text-green-500  hover:text-green-300" />
                     <p className="ml-3">{title}</p>
                 </div>
-                <div className="flex bg-opacity-60 backdrop-blur-lg px-4 py-16 bg-base-200 h-full">
+                <div className="flex bg-opacity-60 backdrop-blur-lg px-1 py-1 bg-base-200 h-full">
                     {children}
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 
