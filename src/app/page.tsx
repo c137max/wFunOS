@@ -14,9 +14,9 @@ const bgImages = [
   "images/wallhaven-eymzjk.jpg"
 ]
 
-const initWondows = [
-  // {title: '公告', content: }
-]
+// const initWondows = [
+//   // {title: '公告', content: }
+// ]
 
 export default function Home() {
 
@@ -28,7 +28,7 @@ export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [bgImageIndex, setBgImageIndex] = useState(0);
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [windows, setWindows] = useState(initWondows);
+  // const [windows, setWindows] = useState(initWondows);
   const deskIcon = tmp;
 
   const handleContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -99,7 +99,7 @@ export default function Home() {
           </ul>
         </div>
       </MyWindow>
-      <Dock windows={windows} className="fixed bottom-3 w-3/4"></Dock>
+      <Dock windows={[]} className="fixed bottom-3 w-3/4"></Dock>
       <Modal2 isOpen={isOpen} x={position.x} y={position.y} onClick={handleMenuOnClick}></Modal2>
     </div>
   )
