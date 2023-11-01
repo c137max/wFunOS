@@ -92,18 +92,18 @@ export default function Home() {
           <div>
           </div>
           <div>
-            接下来的工作:
+            接下来的任务：
           </div>
           <ul >
             <li>1.添加菜单功能</li>
             <li>2.完善dock显示</li>
-            <li>3.窗口可伸缩</li>
+            <li><p className="line-through">3.窗口可伸缩</p>{' '}<span>但是效果比较差，只能适用于微调</span></li>
           </ul>
         </div>
       </MyWindow>
-      <MyWindow title="测试" width={306}>
+      {/* <MyWindow title="测试" width={306}>
 
-      </MyWindow>
+      </MyWindow> */}
       <Dock windows={[]} className="fixed bottom-3 w-3/4"></Dock>
       <Modal2 isOpen={isOpen} x={position.x} y={position.y} onClick={handleMenuOnClick}></Modal2>
     </div>
