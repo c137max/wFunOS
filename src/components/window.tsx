@@ -17,6 +17,9 @@ export default function MyWindow({ children, isActive = true, initPos = [70, 80]
     onClick = () => true
 }: MyWindowProps) {
     const windowRef = useRef(null);
+
+    const moveBoxRef = useRef(null);
+
     const [pos, setPos] = useState({
         x: initPos[0],
         y: initPos[1],
@@ -24,7 +27,6 @@ export default function MyWindow({ children, isActive = true, initPos = [70, 80]
         initialX: 0,
         initialY: 0,
     });
-    const divRef = useRef(null);
 
 
     const handleMouseDown = (e: React.MouseEvent) => {
@@ -64,7 +66,16 @@ export default function MyWindow({ children, isActive = true, initPos = [70, 80]
             });
         }
     };
-
+    useEffect(() => {
+        const div = moveBoxRef.current;
+        if (div) {
+            // 在组件渲染完成后获取div元素，并设置其新的宽度和高度
+            // @ts-ignore
+            div.style.top = `${pos.y}px`;
+            // @ts-ignore
+            div.style.left = `${pos.x}px`;
+        }
+    }, [pos.x, pos.y]);
     const handleWindowClose = () => {
         console.log('close')
         if (!onClick()) {
@@ -75,12 +86,16 @@ export default function MyWindow({ children, isActive = true, initPos = [70, 80]
             windowRef.current.remove()
         }
     }
+
     return (
         <div ref={windowRef}>
+            <div>
+                
+            </div>
             <div
-                style={{ top: `${pos.y}px`, left: `${pos.x}px`, height: `${height}px`, width: `${width}px` }}
-                className="overflow-hidden overflow-x-auto  rounded border  fixed  resize "
-                ref={divRef}
+                style={{ top: `${initPos[0]}px`, left: `${initPos[1]}px`, height: `${height}px`, width: `${width}px` }}
+                className="overflow-hidden overflow-x-auto  rounded   fixed   "
+                ref={moveBoxRef}
             >
                 <div className={`${isActive ? 'bg-base-100' : 'bg-base-200'} text-white bg-opacity-60 backdrop-blur-lg p-3 inline-flex w-full`}
                     onMouseMove={handleMoveCapture} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}
@@ -99,6 +114,4 @@ export default function MyWindow({ children, isActive = true, initPos = [70, 80]
     )
 }
 
-function useRefs() {
-    throw new Error("Function not implemented.");
-}
+

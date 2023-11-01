@@ -21,7 +21,7 @@ const bgImages = [
 export default function Home() {
 
   let tmp = []
-  for (let index = 0; index < 20; index++) {
+  for (let index = 0; index < 2; index++) {
     tmp.push(index.toString())
   }
 
@@ -72,9 +72,11 @@ export default function Home() {
       </div>
       <main className="mt-5 mb-5" >
         <div onClick={handleContextClicked} onContextMenuCapture={handleContextMenu} className="grid grid-rows-6 grid-flow-col gap-4 justify-start">
-          {deskIcon.map(m => <>
-            <DeskIcon key={m.toString()} name={m}>{m}</DeskIcon>
-          </>)}
+          {deskIcon.map((m) =>
+            <DeskIcon key={m} name={m}>
+              {m}
+            </DeskIcon>
+          )}
         </div>
       </main>
       {/* <>
@@ -98,6 +100,9 @@ export default function Home() {
             <li>3.窗口可伸缩</li>
           </ul>
         </div>
+      </MyWindow>
+      <MyWindow title="测试" width={306}>
+
       </MyWindow>
       <Dock windows={[]} className="fixed bottom-3 w-3/4"></Dock>
       <Modal2 isOpen={isOpen} x={position.x} y={position.y} onClick={handleMenuOnClick}></Modal2>
