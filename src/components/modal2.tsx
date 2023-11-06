@@ -21,10 +21,7 @@ export interface MenuProps {
 
 const menu: MenuProps[] = [
     {
-        icon: 'AcademicCapIcon', className: '', name: '学习', isOutline: true, children: [
-            { icon: 'BugAntIcon', name: 'BliBli' },
-            { icon: 'BugAntIcon', name: 'Goo' },
-        ]
+        icon: 'AcademicCapIcon', className: '', name: '学习', isOutline: true
     },
     {
         icon: 'Cog8ToothIcon', name: '切换壁纸', isOutline: false

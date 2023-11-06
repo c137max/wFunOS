@@ -1,12 +1,23 @@
-import { WindowIcon } from "@heroicons/react/24/solid"
+import HeroIcon from "./icon"
 
 
 interface DockPropos {
     className?: string,
-    windows: []
+    windows: WindowType[],
+    onClick: (_id: string) => void
 }
 
-export default function Dock({ className, windows }: DockPropos) {
+const renderIcon = (icon: string | undefined, title: string) => {
+    if (icon === '' || icon == undefined || icon == null) {
+        return < div className=" text-black border w-12 h-12 rounded-full flex items-center justify-center text-lg font-light" >
+            {title.slice(0, 1)}
+        </div >
+    } else {
+        return <HeroIcon className="text-black-500" name={icon} />
+    }
+}
+
+export default function Dock({ className, windows, onClick }: DockPropos) {
     return (
         <div className={className}>
             <div className="navbar bg-base-100 rounded-full backdrop-blur-lg bg-opacity-60">
@@ -76,12 +87,14 @@ export default function Dock({ className, windows }: DockPropos) {
                     </div>
                 </div>
                 <div className="dropdown dropdown-top">
-                    <div className="btn btn-ghost btn-circle normal-case text-xl">
-                        <WindowIcon className=" h-5 w-5  " />
-                    </div>
-                    <div className="normal-case btn btn-ghost text-xl btn-circle">
-                        <WindowIcon className=" h-5 w-5  " />
-                    </div>
+                    {
+                        windows.map(x =>
+                            <div key={x.id} className={`btn ${x.isActive? 'bg-white bg-opacity-50' : ''} btn-ghost btn-circle normal-case text-xl`}>
+                                <button onClick={()=> {onClick(x.id)}}>{ renderIcon(x.icon, x.title) }
+                                </button>
+                            </div>)
+                    }
+
                 </div>
                 <div className="flex-1">
 

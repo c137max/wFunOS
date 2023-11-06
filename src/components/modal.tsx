@@ -17,7 +17,7 @@ export default function Modal({
   onClose = (isOpen) => { },
 }: ModalProps) {
   return (
-    <div>
+    <div  className='z-50'>
       <Transition appear show={isOpen} as={Fragment} >
         <Dialog
           as="div"
@@ -28,6 +28,7 @@ export default function Modal({
             }
           }}
           static={true}
+         
         >
           <Transition.Child
             as={Fragment}

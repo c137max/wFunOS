@@ -8,18 +8,20 @@ interface MyWindowProps {
     height?: number,
     width?: number,
     zIndex?: number,
-    isActive?: boolean
-    onClose?: () => boolean | void,
+    isActive?: boolean,
+    isHide?: boolean,
+    onClose?: () => void,
     onZoom?: () => void,
     onMinimize?: () => void,
     onClick?: () => void,
 }
 
-export default function MyWindow({ children, zIndex = 1, isActive=true, initPos = [70, 80],
+export default function MyWindow({ children, zIndex = 1, isActive = false, isHide = false, initPos = [70, 80],
     width = 200, height = 300, title = '',
     onClose = () => true,
-    onZoom = () => {},
-    onMinimize = () => {},
+    onZoom = () => { },
+    onMinimize = () => { },
+    onClick = () => { },
 }: MyWindowProps) {
     const windowRef = useRef(null);
 
@@ -37,7 +39,6 @@ export default function MyWindow({ children, zIndex = 1, isActive=true, initPos 
         bfHeight: height,
         bfX: initPos[0],
         bfY: initPos[1],
-        isHide: false,
     });
 
 
@@ -78,6 +79,10 @@ export default function MyWindow({ children, zIndex = 1, isActive=true, initPos 
             });
         }
     };
+
+    const handleBoxClick = () => {
+        onClick()
+    }
     useEffect(() => {
         const div = moveBoxRef.current;
         if (div) {
@@ -91,14 +96,7 @@ export default function MyWindow({ children, zIndex = 1, isActive=true, initPos 
     }, [pos.x, pos.y]);
 
     const handleWindowClose = () => {
-        console.log('close')
-        if (!onClose()) {
-            return;
-        }
-        if (windowRef.current !== null) {
-            // @ts-ignore
-            windowRef.current.remove()
-        }
+        onClose()
     }
 
     const handleWindowZoom = () => {
@@ -126,22 +124,22 @@ export default function MyWindow({ children, zIndex = 1, isActive=true, initPos 
 
     const handleWindowMinimize = () => {
         onMinimize();
-        setPos({
-            ...pos,
-            isHide: true
-        })
     }
-    
+
 
     return (
         <div ref={windowRef}>
             <div
-                style={{ top: `${initPos[0]}px`, left: `${initPos[1]}px`, height: `${pos.height}px`, width: `${pos.width}px`, display: `${pos.isHide ? 'none' : '-'}` }}
+                style={{
+                    top: `${initPos[0]}px`, left: `${initPos[1]}px`, height: `${pos.height}px`, width: `${pos.width}px`, visibility: `${isHide ? 'hidden' : 'visible'}`,
+                    zIndex: `${zIndex}`
+                }}
                 className="overflow-hidden overflow-x-auto fixed cursor-auto resize rounded-lg"
                 ref={moveBoxRef}
+                onMouseDown={handleBoxClick}
             >
                 <div className={`absolute top-0 left-0 right-0 bottom-0 `}>
-                    <div className={`${isActive ? 'bg-base-100' : 'bg-base-200'} text-white bg-opacity-60 select-none  h-12  backdrop-blur-lg p-3 inline-flex items-center w-full`}
+                    <div className={` ${isActive ? 'bg-white' : 'bg-base-300'} text-white bg-opacity-60  select-none  h-12  backdrop-blur-lg p-3 inline-flex items-center w-full`}
                         onMouseMove={handleMoveCapture} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}
                         onMouseLeave={handleMouseLeave}
                         onDoubleClick={handleWindowZoom}
