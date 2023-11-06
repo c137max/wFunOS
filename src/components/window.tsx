@@ -7,13 +7,19 @@ interface MyWindowProps {
     title?: string,
     height?: number,
     width?: number,
-    isActive?: boolean,
-    onClick?: () => boolean | void;
+    zIndex?: number,
+    isActive?: boolean
+    onClose?: () => boolean | void,
+    onZoom?: () => void,
+    onMinimize?: () => void,
+    onClick?: () => void,
 }
 
-export default function MyWindow({ children, isActive = true, initPos = [70, 80],
+export default function MyWindow({ children, zIndex = 1, isActive=true, initPos = [70, 80],
     width = 200, height = 300, title = '',
-    onClick = () => true
+    onClose = () => true,
+    onZoom = () => {},
+    onMinimize = () => {},
 }: MyWindowProps) {
     const windowRef = useRef(null);
 
@@ -25,9 +31,13 @@ export default function MyWindow({ children, isActive = true, initPos = [70, 80]
         isDragging: false, // 是否正在拖动
         initialX: 0,
         initialY: 0,
-        isZooming: false,  // 是否正在缩放div
         width,
-        height
+        height,
+        bfWidth: width,
+        bfHeight: height,
+        bfX: initPos[0],
+        bfY: initPos[1],
+        isHide: false,
     });
 
 
@@ -82,7 +92,7 @@ export default function MyWindow({ children, isActive = true, initPos = [70, 80]
 
     const handleWindowClose = () => {
         console.log('close')
-        if (!onClick()) {
+        if (!onClose()) {
             return;
         }
         if (windowRef.current !== null) {
@@ -91,22 +101,55 @@ export default function MyWindow({ children, isActive = true, initPos = [70, 80]
         }
     }
 
+    const handleWindowZoom = () => {
+        onZoom();
+        if (pos.bfHeight === pos.height) {
+            setPos({
+                ...pos,
+                x: 0,
+                y: 0,
+                bfX: pos.x,
+                bfY: pos.y,
+                height: window.innerWidth,
+                width: window.innerWidth,
+            })
+        } else {
+            setPos({
+                ...pos,
+                x: pos.bfX,
+                y: pos.bfY,
+                height: pos.bfHeight,
+                width: pos.bfWidth
+            })
+        }
+    }
+
+    const handleWindowMinimize = () => {
+        onMinimize();
+        setPos({
+            ...pos,
+            isHide: true
+        })
+    }
+    
+
     return (
         <div ref={windowRef}>
             <div
-                style={{ top: `${initPos[0]}px`, left: `${initPos[1]}px`, height: `${pos.height}px`, width: `${pos.width}px` }}
-                className="overflow-hidden overflow-x-auto fixed cursor-auto resize ov"
+                style={{ top: `${initPos[0]}px`, left: `${initPos[1]}px`, height: `${pos.height}px`, width: `${pos.width}px`, display: `${pos.isHide ? 'none' : '-'}` }}
+                className="overflow-hidden overflow-x-auto fixed cursor-auto resize rounded-lg"
                 ref={moveBoxRef}
             >
                 <div className={`absolute top-0 left-0 right-0 bottom-0 `}>
                     <div className={`${isActive ? 'bg-base-100' : 'bg-base-200'} text-white bg-opacity-60 select-none  h-12  backdrop-blur-lg p-3 inline-flex items-center w-full`}
                         onMouseMove={handleMoveCapture} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}
                         onMouseLeave={handleMouseLeave}
+                        onDoubleClick={handleWindowZoom}
                     >
                         <div className="space-x-1 inline-flex">
                             <div onClick={handleWindowClose} className="w-3 h-3 bg-black hover:bg-red-600 rounded-full"></div>
-                            <div className="w-3 h-3  bg-yellow-500 hover:bg-yellow-300 rounded-full"></div>
-                            <div className="w-3 h-3  bg-green-500 hover:bg-green-300 rounded-full"></div>
+                            <div onClick={handleWindowZoom} className="w-3 h-3  bg-yellow-500 hover:bg-yellow-300 rounded-full"></div>
+                            <div onClick={handleWindowMinimize} className="w-3 h-3  bg-green-500 hover:bg-green-300 rounded-full"></div>
                         </div>
                         <p className="ml-4">{title}</p>
                     </div>
