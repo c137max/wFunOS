@@ -5,7 +5,8 @@ import Modal2 from "../components/modal2";
 import Dock from "../components/dock";
 import MyWindow from "../components/window";
 import DeskIcon from "@/components/deskIcon";
-import TestP from "./test/TestP";
+import { BugAntIcon, ComputerDesktopIcon } from "@heroicons/react/24/solid";
+import {TestPage} from "../utils/dynamicImport";
 
 const bgImages = [
   "images/0b3912f8f3514b6fb77779d258179e08.jpg",
@@ -16,22 +17,30 @@ const bgImages = [
 ]
 
 const initWondows: WindowType[] = [
-  { id: 'test1', title: '2', content: <TestP />, zIndex: 30, isActive: true, isHide: false, icon: '' },
-  { id: 'test2', title: '1', content: <TestP />, zIndex: 30, isActive: false, isHide: false, icon: '' }
+  // { id: 'test1', title: '2', content: <TestP />, zIndex: 30, isActive: true, isHide: false, icon: '' },
+  // { id: 'test2', title: '1', content: <TestP />, zIndex: 30, isActive: false, isHide: false, icon: '' }
+]
+
+interface DeskIconProps {
+  id: string,
+  label: string,
+  icon: React.ReactElement | string,
+  comp: any
+}
+
+const deskIcons: DeskIconProps[] = [
+  { id: '1', label: '计算器', icon: <ComputerDesktopIcon />, comp: TestPage },
+  { id: '2', label: '测试', icon: <BugAntIcon />, comp: TestPage },
+
 ]
 
 export default function Home() {
 
-  let tmp = []
-  for (let index = 0; index < 2; index++) {
-    tmp.push(index.toString())
-  }
 
   const [isOpen, setIsOpen] = useState(false);
   const [bgImageIndex, setBgImageIndex] = useState(0);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [windows, setWindows] = useState(initWondows);
-  const deskIcon = tmp;
 
   const handleContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -115,6 +124,29 @@ export default function Home() {
     setWindows([...windows]);
   }
 
+
+  const handlIconDoubleClick = async (item: DeskIconProps) => {
+    let maxZIndex = 0;
+    windows.forEach(i => {
+      i.isActive = false
+      if (i.zIndex > maxZIndex) {
+        maxZIndex = i.zIndex;
+      }
+    })
+
+
+    windows.push({
+      title: item.label,
+      id: windows.length + '-' + item.id,
+      zIndex: maxZIndex + 1,
+      isActive: true,
+      isHide: false,
+      content: item.comp()
+    })
+
+    setWindows([...windows]);
+  }
+
   return (
     <div style={{ backgroundImage: ` url('${bgImages[bgImageIndex]}')` }} onClick={handleContextClicked} onContextMenuCapture={e => e.preventDefault()} className={`bg-cover bg-center min-h-screen p-3 rounded-lg bg-blue-50 `}>
       <div className="h-10 bg-base-100 rounded-full backdrop-blur-lg bg-opacity-60  top-0 w-full " />
@@ -122,9 +154,9 @@ export default function Home() {
       <Dock windows={windows} className="fixed z-0 bottom-3 w-3/4" onClick={handleDockWorkClick}></Dock>
       <main className="mt-5 mb-5" >
         <div onClick={handleContextClicked} onContextMenuCapture={handleContextMenu} className="grid grid-rows-6 grid-flow-col gap-4 justify-start">
-          {deskIcon.map((m) =>
-            <DeskIcon key={m} name={m}>
-              {m}
+          {deskIcons.map((m) =>
+            <DeskIcon key={m.id} onDoubleClick={() => handlIconDoubleClick(m)} name={m.label}>
+              {m.icon}
             </DeskIcon>
           )}
         </div>

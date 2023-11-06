@@ -7,5 +7,5 @@ interface WindowType {
     zIndex: number,
     isActive: boolean,
     isHide: boolean,
-    content: React.ReactNode
+    content: any
 }
