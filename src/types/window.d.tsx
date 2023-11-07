@@ -7,5 +7,17 @@ interface WindowType {
     zIndex: number,
     isActive: boolean,
     isHide: boolean,
-    content: any
+    content: any,
+
+    height?: number,
+    weight?: number,
+    posX: number,
+    posY: number
+}
+
+interface DeskIconProps {
+    id: string,
+    label: string,
+    icon: React.ReactElement | string,
+    comp: any  // 内容
 }

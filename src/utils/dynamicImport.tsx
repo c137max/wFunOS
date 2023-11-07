@@ -1,8 +1,11 @@
 import dynamic from "next/dynamic";
 
 
-let TestPage = dynamic(() => import('@/app/test/TestP'), {
+const TestPage = dynamic(() => import('@/app/test/TestP'), {
+  loading: () => <p>Loading...</p>
+})
+const TestPage2 = dynamic(() => import('@/app/test/TestP2'), {
   loading: () => <p>Loading...</p>
 })
 
-export {TestPage}
+export {TestPage, TestPage2}

@@ -6,31 +6,20 @@ import Dock from "../components/dock";
 import MyWindow from "../components/window";
 import DeskIcon from "@/components/deskIcon";
 import { BugAntIcon, ComputerDesktopIcon } from "@heroicons/react/24/solid";
-import {TestPage} from "../utils/dynamicImport";
+import { TestPage, TestPage2 } from "../utils/dynamicImport";
+import WindowManage from "./window-manage";
 
 const bgImages = [
-  "images/0b3912f8f3514b6fb77779d258179e08.jpg",
-  "images/3kqv3y.jpg",
-  "images/4v833n.jpg",
-  "images/18e06ad1d978769c670bfc1cc1be062b.png",
-  "images/wallhaven-eymzjk.jpg"
+  "/images/IMG_20230211_182749.jpg",
 ]
 
-const initWondows: WindowType[] = [
-  // { id: 'test1', title: '2', content: <TestP />, zIndex: 30, isActive: true, isHide: false, icon: '' },
-  // { id: 'test2', title: '1', content: <TestP />, zIndex: 30, isActive: false, isHide: false, icon: '' }
-]
+const initWondows: WindowType[] = []
 
-interface DeskIconProps {
-  id: string,
-  label: string,
-  icon: React.ReactElement | string,
-  comp: any
-}
+const windManage = new WindowManage();
 
 const deskIcons: DeskIconProps[] = [
   { id: '1', label: '计算器', icon: <ComputerDesktopIcon />, comp: TestPage },
-  { id: '2', label: '测试', icon: <BugAntIcon />, comp: TestPage },
+  { id: '2', label: '测试', icon: <BugAntIcon />, comp: TestPage2 },
 
 ]
 
@@ -41,6 +30,10 @@ export default function Home() {
   const [bgImageIndex, setBgImageIndex] = useState(0);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [windows, setWindows] = useState(initWondows);
+
+  // @ts-ignore
+  windManage.setWindowCall(setWindows);
+
 
   const handleContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -110,8 +103,8 @@ export default function Home() {
   }
 
   const handleWindowClose = (id: string) => {
-    const newWindows = windows.filter(i => id !== i.id);
-    setWindows(newWindows);
+    windManage.removeWindow(id)
+    windManage.done()
   }
 
   const handleWindowMinmize = (id: string) => {
@@ -126,25 +119,9 @@ export default function Home() {
 
 
   const handlIconDoubleClick = async (item: DeskIconProps) => {
-    let maxZIndex = 0;
-    windows.forEach(i => {
-      i.isActive = false
-      if (i.zIndex > maxZIndex) {
-        maxZIndex = i.zIndex;
-      }
-    })
-
-
-    windows.push({
-      title: item.label,
-      id: windows.length + '-' + item.id,
-      zIndex: maxZIndex + 1,
-      isActive: true,
-      isHide: false,
-      content: item.comp()
-    })
-
-    setWindows([...windows]);
+    windManage.addWindow(item)
+    windManage.setAllWDisActive();
+    windManage.done();
   }
 
   return (
@@ -162,7 +139,7 @@ export default function Home() {
         </div>
       </main>
       <>
-        {windows.map(m => <MyWindow key={m.id} title={m.title} zIndex={m.zIndex} isActive={m.isActive} isHide={m.isHide}
+        {windows.map(m => <MyWindow key={m.id} title={m.title} zIndex={m.zIndex} isActive={m.isActive} isHide={m.isHide} height={m.height} width={m.weight} initPos={[m.posX, m.posY]}
           onClick={() => handleWindowClick(m.id)} onClose={() => handleWindowClose(m.id)}
           onMinimize={() => handleWindowMinmize(m.id)}
         >
