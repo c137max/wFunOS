@@ -35,6 +35,7 @@ class WindowManage {
             weight: item.height ?? this.defaultW,
             posX: item.x ?? this.getAndAddX(),
             posY: item.x ?? this.getAndAddY(),
+            icon: item.icon
         })
     }
 

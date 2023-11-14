@@ -3,7 +3,7 @@
 interface WindowType {
     id: string,
     title: string,
-    icon?: string,
+    icon?: React.ReactElement | string | SVGRectElement,
     zIndex: number,
     isActive: boolean,
     isHide: boolean,
@@ -18,6 +18,6 @@ interface WindowType {
 interface DeskIconProps {
     id: string,
     label: string,
-    icon: React.ReactElement | string,
+    icon: React.ReactElement | string | SVGRectElement,
     comp: any  // 内容
 }

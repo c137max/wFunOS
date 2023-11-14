@@ -1,3 +1,4 @@
+import { ReactElement } from "react"
 import HeroIcon from "./icon"
 
 
@@ -7,13 +8,15 @@ interface DockPropos {
     onClick: (_id: string) => void
 }
 
-const renderIcon = (icon: string | undefined, title: string) => {
+const renderIcon = (icon: string | undefined | ReactElement, title: string) => {
     if (icon === '' || icon == undefined || icon == null) {
         return < div className=" text-black border w-12 h-12 rounded-full flex items-center justify-center text-lg font-light" >
             {title.slice(0, 1)}
         </div >
     } else {
-        return <HeroIcon className="text-black-500" name={icon} />
+        return <div className="w-7 h-7 rounded-full flex items-center justify-center">
+            {icon}
+        </div>
     }
 }
 
