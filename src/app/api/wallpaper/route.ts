@@ -1,4 +1,3 @@
-'use server'
 import { OK } from "../result"
 
 export async function GET(request: Request) {

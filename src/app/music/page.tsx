@@ -1,3 +1,4 @@
+"use client"
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, PlayIcon, StarIcon } from '@heroicons/react/24/solid';
 import React, { useState, useEffect } from 'react';
 
