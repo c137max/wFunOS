@@ -139,7 +139,7 @@ export default function MyWindow({ children, zIndex = 1, isActive = false, isHid
                 onMouseDown={handleBoxClick}
             >
                 <div className={`absolute top-0 left-0 right-0 bottom-0 `}>
-                    <div className={` ${isActive ? 'bg-white' : 'bg-base-300'} text-white bg-opacity-60  select-none  h-12  backdrop-blur-lg p-3 inline-flex items-center w-full`}
+                    <div className={` ${isActive ? 'bg-base-400' : 'bg-base-300'} text-white bg-opacity-60  select-none  h-12  backdrop-blur-lg p-3 inline-flex items-center w-full`}
                         onMouseMove={handleMoveCapture} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}
                         onMouseLeave={handleMouseLeave}
                         onDoubleClick={handleWindowZoom}

@@ -1,4 +1,3 @@
-import { getWorld } from "@/api/simple"
 import { useState } from "react"
 
 export default function TestP2() {
@@ -6,7 +5,7 @@ export default function TestP2() {
     
 
     const handleOnclick = () => {
-        setText(getWorld())
+        setText("somtetx")
     }
 
     return <>

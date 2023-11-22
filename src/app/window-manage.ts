@@ -23,7 +23,7 @@ class WindowManage {
         this.setWindowCallBack = setWindow;
     }
 
-    public addWindow(item: DeskIconProps & { height?: number, weight?: number, x?: number, y?: number} ) {
+    public addWindow(item: DeskIconProps) {
         this.workQueue.push({
             title: item.label,
             id: ++this.workIdIndex + '-' + item.label,
@@ -31,10 +31,10 @@ class WindowManage {
             isActive: true,
             isHide: false,
             content: item.comp(),
-            height: item.height ?? this.defaultH,
-            weight: item.height ?? this.defaultW,
-            posX: item.x ?? this.getAndAddX(),
-            posY: item.x ?? this.getAndAddY(),
+            height: item.initSetting?.height ?? this.defaultH,
+            weight: item.initSetting?.weight ?? this.defaultW,
+            posX: item.initSetting?.posX ?? this.getAndAddX(),
+            posY: item.initSetting?.posY ?? this.getAndAddY(),
             icon: item.icon
         })
     }
@@ -69,8 +69,39 @@ class WindowManage {
         })
     }
 
-    public setActive(id: string) {
+    public setDisactive(id: string) {
+        this.workQueue.forEach(i => {
+            if (i.id === id) {
+                i.isActive = false
+            } 
+        })
+    }
 
+    public setActive(id: string) {
+        this.workQueue.forEach(i => {
+            if (i.id != id) {
+                i.isActive = false
+            } else {
+                i.isActive = true;
+                i.zIndex = ++this.maxZIndex ;
+            }
+        })
+    }
+
+    public setVisiable(id: string, visiable: boolean) {
+        this.workQueue.forEach(i => {
+            if (i.id === id) {
+                i.isHide = !visiable
+            } 
+        })
+    }
+
+    public setVisiableRevers(id: string) {
+        this.workQueue.forEach(i => {
+            if (i.id === id) {
+                i.isHide = !i.isHide
+            } 
+        })
     }
 
 

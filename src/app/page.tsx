@@ -5,8 +5,8 @@ import Modal2 from "../components/modal2";
 import Dock from "../components/dock";
 import MyWindow from "../components/window";
 import DeskIcon from "@/components/deskIcon";
-import { BugAntIcon, ComputerDesktopIcon } from "@heroicons/react/24/solid";
-import { TestPage, TestPage2 } from "../utils/dynamicImport";
+import { BugAntIcon, ComputerDesktopIcon, MusicalNoteIcon } from "@heroicons/react/24/solid";
+import { MusicPage, TestPage, TestPage2 } from "../utils/dynamicImport";
 import WindowManage from "./window-manage";
 
 const bgImages = [
@@ -20,6 +20,12 @@ const windManage = new WindowManage();
 const deskIcons: DeskIconProps[] = [
   { id: '1', label: '计算器', icon: <ComputerDesktopIcon />, comp: TestPage },
   { id: '2', label: '测试', icon: <BugAntIcon />, comp: TestPage2 },
+  {
+    id: '3', label: '音乐', icon: <MusicalNoteIcon />, comp: MusicPage, initSetting: {
+      height: 400,
+      weight: 600
+    }
+  },
 
 ]
 
@@ -52,7 +58,6 @@ export default function Home() {
   }
 
   const handleMenuOnClick = (index: string) => {
-    console.log(index)
     if (index === '1') {
       if (bgImageIndex >= bgImages.length - 1) {
         console.log(`切换壁纸: ${bgImages[0]}`)
@@ -67,39 +72,14 @@ export default function Home() {
   }
 
   const handleWindowClick = (id: string) => {
-    let indexCounter = 0;
-    windows.forEach(i => {
-      if (id == i.id) {
-        i.isActive = true;
-        i.isHide = false;
-        i.zIndex = windows.length - 1;
-      } else {
-        i.isActive = false;
-        i.zIndex = indexCounter;
-        indexCounter++;
-      }
-    });
-    setWindows([...windows])
+    windManage.setActive(id)
+    windManage.done()
   }
+
   const handleDockWorkClick = (id: string) => {
-    let indexCounter = 0;
-    windows.forEach(i => {
-      if (id == i.id) {
-        if (i.isActive) {
-          i.isActive = false;
-          i.isHide = true;
-        } else {
-          i.isActive = true;
-          i.isHide = false;
-        }
-        i.zIndex = windows.length - 1;
-      } else {
-        i.isActive = false;
-        i.zIndex = indexCounter;
-        indexCounter++;
-      }
-    });
-    setWindows([...windows])
+    windManage.setActive(id);
+    windManage.setVisiableRevers(id);
+    windManage.done()
   }
 
   const handleWindowClose = (id: string) => {
@@ -108,19 +88,15 @@ export default function Home() {
   }
 
   const handleWindowMinmize = (id: string) => {
-    windows.forEach(i => {
-      if (id === i.id) {
-        i.isHide = true
-        i.isActive = false
-      }
-    })
-    setWindows([...windows]);
+    windManage.setDisactive(id);
+    windManage.setVisiable(id, false);
+    windManage.done()
   }
 
 
-  const handlIconDoubleClick = async (item: DeskIconProps) => {
-    windManage.addWindow(item)
+  const handlIconDoubleClick = (item: DeskIconProps) => {
     windManage.setAllWDisActive();
+    windManage.addWindow(item)
     windManage.done();
   }
 
