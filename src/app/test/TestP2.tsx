@@ -1,15 +1,9 @@
-import { useState } from "react"
 
 export default function TestP2() {
-    const [text, setText] = useState("")
-    
-
-    const handleOnclick = () => {
-        setText("somtetx")
-    }
 
     return <>
-        <p>{text}</p>
-        <button className="btn-success" onClick={handleOnclick}>点击这里</button>
+        <iframe src="https://www.bilibili.com/video/BV1Am411y7iK" style={{width: '100%', height: '100%'}} scrolling="no" border="0" frameBorder="no"
+            // @ts-ignore
+                framespacing="0" allowFullScreen="true"></iframe>
     </>
 }

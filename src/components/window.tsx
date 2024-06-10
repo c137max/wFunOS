@@ -151,7 +151,7 @@ export default function MyWindow({ children, zIndex = 1, isActive = false, isHid
                         </div>
                         <p className="ml-4">{title}</p>
                     </div>
-                    <div className=" absolute top-12 left-0 right-0 bottom-0  bg-opacity-60 backdrop-blur-lg px-1 py-1 bg-base-200 ">
+                    <div className=" absolute top-12 left-0 right-0 bottom-0  bg-opacity-60 backdrop-blur-lg  bg-base-200 ">
                         {children}
                     </div>
                 </div>

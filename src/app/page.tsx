@@ -68,7 +68,7 @@ export default function Home() {
                 console.log(`切换壁纸: ${bgImages[bgImageIndex + 1]}`)
                 setBgImageIndex(bgImageIndex + 1);
             }
-            // setIsOpen((_) => false)
+            setIsOpen((_) => false)
         }
     }
 
@@ -88,14 +88,14 @@ export default function Home() {
         windManage.done()
     }
 
-    const handleWindowMinmize = (id: string) => {
+    const handleWindowMinimize = (id: string) => {
         windManage.setDisactive(id);
         windManage.setVisiable(id, false);
         windManage.done()
     }
 
 
-    const handlIconDoubleClick = (item: DeskIconProps) => {
+    const handleIconDoubleClick = (item: DeskIconProps) => {
         windManage.setAllWDisActive();
         windManage.addWindow(item)
         windManage.done();
@@ -112,7 +112,7 @@ export default function Home() {
                 <div onClick={handleContextClicked} onContextMenuCapture={handleContextMenu}
                      className="grid grid-rows-6 grid-flow-col gap-4 justify-start">
                     {deskIcons.map((m) =>
-                        <DeskIcon key={m.id} onDoubleClick={() => handlIconDoubleClick(m)} name={m.label}>
+                        <DeskIcon key={m.id} onDoubleClick={() => handleIconDoubleClick(m)} name={m.label}>
                             {m.icon}
                         </DeskIcon>
                     )}
@@ -124,7 +124,7 @@ export default function Home() {
                                             initPos={[m.posX, m.posY]}
                                             onClick={() => handleWindowClick(m.id)}
                                             onClose={() => handleWindowClose(m.id)}
-                                            onMinimize={() => handleWindowMinmize(m.id)}
+                                            onMinimize={() => handleWindowMinimize(m.id)}
                 >
                     {m.content}
                 </MyWindow>)}
