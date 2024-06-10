@@ -22,8 +22,8 @@ const renderIcon = (icon: string | undefined | ReactElement, title: string) => {
 
 export default function Dock({ className, windows, onClick }: DockProps) {
     return (
-        <div className={className}>
-            <div className="navbar bg-base-100 rounded-full backdrop-blur-lg bg-opacity-60">
+        <div className={className} >
+            <div className="navbar bg-base-100 rounded-r-full backdrop-blur-lg bg-opacity-60" >
                 <div className="dropdown dropdown-top">
                     <button className="btn btn-ghost btn-circle normal-case text-xl">M</button>
                     <div tabIndex={0} className="mt-3 z-[1] card card-compact dropdown-content w-80 h-96 bg-base-100 shadow">

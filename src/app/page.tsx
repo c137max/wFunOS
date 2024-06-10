@@ -106,7 +106,7 @@ export default function Home() {
              onContextMenuCapture={handleContextMenu}
              className={`bg-cover bg-center h-screen `}>
             <Modal2 isOpen={isOpen} x={position.x} y={position.y} onClick={handleMenuOnClick}></Modal2>
-            <Dock windows={windows} className="fixed z-0 bottom-3 transition-all duration-100" onClick={handleDockWorkClick}></Dock>
+            <Dock windows={windows}  className="fixed z-0 bottom-3 transition-all duration-100" onClick={handleDockWorkClick}></Dock>
 
             <>
                 {windows.map(m => <MyWindow key={m.id} title={m.title} zIndex={m.zIndex} isActive={m.isActive}
