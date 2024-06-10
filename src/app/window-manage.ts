@@ -88,15 +88,15 @@ class WindowManage {
         })
     }
 
-    public setVisiable(id: string, visiable: boolean) {
+    public setVisible(id: string, visible: boolean) {
         this.workQueue.forEach(i => {
             if (i.id === id) {
-                i.isHide = !visiable
+                i.isHide = !visible
             } 
         })
     }
 
-    public setVisiableRevers(id: string) {
+    public setVisibleRevers(id: string) {
         this.workQueue.forEach(i => {
             if (i.id === id) {
                 i.isHide = !i.isHide

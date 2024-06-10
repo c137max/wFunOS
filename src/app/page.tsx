@@ -6,7 +6,7 @@ import Dock from "../components/dock";
 import MyWindow from "../components/window";
 import DeskIcon from "@/components/deskIcon";
 import {BugAntIcon, ComputerDesktopIcon, MusicalNoteIcon} from "@heroicons/react/24/solid";
-import {MusicPage, TestPage, TestPage2} from "@/utils/dynamicImport";
+import {MusicPage, TestPage2} from "@/utils/dynamicImport";
 import WindowManage from "./window-manage";
 import {DeskIconProps, WindowType} from "@/types/window.d";
 
@@ -16,12 +16,11 @@ const bgImages = [
     "https://yijhsite-1251621866.cos.ap-guangzhou.myqcloud.com/rafael-garcin-BemwT7_KYAM-unsplash.jpg"
 ]
 
-const initWondows: WindowType[] = []
+const initWindows: WindowType[] = []
 
 const windManage = new WindowManage();
 
 const deskIcons: DeskIconProps[] = [
-    {id: '1', label: '计算器', icon: <ComputerDesktopIcon/>, comp: TestPage},
     {id: '2', label: '测试', icon: <BugAntIcon/>, comp: TestPage2},
     {
         id: '3', label: '音乐', icon: <MusicalNoteIcon/>, comp: MusicPage, initSetting: {
@@ -38,7 +37,7 @@ export default function Home() {
     const [isOpen, setIsOpen] = useState(false);
     const [bgImageIndex, setBgImageIndex] = useState(0);
     const [position, setPosition] = useState({x: 0, y: 0});
-    const [windows, setWindows] = useState(initWondows);
+    const [windows, setWindows] = useState(initWindows);
 
     // @ts-ignore
     windManage.setWindowCall(setWindows);
@@ -80,7 +79,7 @@ export default function Home() {
 
     const handleDockWorkClick = (id: string) => {
         windManage.setActive(id);
-        windManage.setVisiableRevers(id);
+        windManage.setVisibleRevers(id);
         windManage.done()
     }
 
@@ -91,7 +90,7 @@ export default function Home() {
 
     const handleWindowMinimize = (id: string) => {
         windManage.setDisactive(id);
-        windManage.setVisiable(id, false);
+        windManage.setVisible(id, false);
         windManage.done()
     }
 
@@ -105,20 +104,10 @@ export default function Home() {
     return (
         <div style={{backgroundImage: ` url('${bgImages[bgImageIndex]}')`}} onClick={handleContextClicked}
              onContextMenuCapture={handleContextMenu}
-             className={`bg-cover bg-center min-h-screen p-3 rounded-lg bg-blue-50 `}>
-            <div className="h-10 bg-base-100 rounded-full backdrop-blur-lg bg-opacity-60  top-0 w-full "/>
+             className={`bg-cover bg-center h-screen `}>
             <Modal2 isOpen={isOpen} x={position.x} y={position.y} onClick={handleMenuOnClick}></Modal2>
-            <Dock windows={windows} className="fixed z-0 bottom-3 w-3/4" onClick={handleDockWorkClick}></Dock>
-            <main className="mt-5 mb-5">
-                <div onClick={handleContextClicked} onContextMenuCapture={handleContextMenu}
-                     className="grid grid-rows-6 grid-flow-col gap-4 justify-start">
-                    {deskIcons.map((m) =>
-                        <DeskIcon key={m.id} onDoubleClick={() => handleIconDoubleClick(m)} name={m.label}>
-                            {m.icon}
-                        </DeskIcon>
-                    )}
-                </div>
-            </main>
+            <Dock windows={windows} className="fixed z-0 bottom-3 transition-all duration-100" onClick={handleDockWorkClick}></Dock>
+
             <>
                 {windows.map(m => <MyWindow key={m.id} title={m.title} zIndex={m.zIndex} isActive={m.isActive}
                                             isHide={m.isHide} height={m.height} width={m.weight}
@@ -130,6 +119,16 @@ export default function Home() {
                     {m.content}
                 </MyWindow>)}
             </>
+            <main className="p-3 ">
+                <div onClick={handleContextClicked} onContextMenuCapture={handleContextMenu}
+                     className="grid grid-rows-6 grid-flow-col gap-4 justify-start">
+                    {deskIcons.map((m) =>
+                        <DeskIcon key={m.id} onDoubleClick={() => handleIconDoubleClick(m)} name={m.label}>
+                            {m.icon}
+                        </DeskIcon>
+                    )}
+                </div>
+            </main>
         </div>
     )
 }
