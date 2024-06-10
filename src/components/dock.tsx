@@ -1,8 +1,9 @@
 import { ReactElement } from "react"
 import HeroIcon from "./icon"
+import {WindowType} from '@/types/window.d'
 
 
-interface DockPropos {
+interface DockProps {
     className?: string,
     windows: WindowType[],
     onClick: (_id: string) => void
@@ -20,7 +21,7 @@ const renderIcon = (icon: string | undefined | ReactElement, title: string) => {
     }
 }
 
-export default function Dock({ className, windows, onClick }: DockPropos) {
+export default function Dock({ className, windows, onClick }: DockProps) {
     return (
         <div className={className}>
             <div className="navbar bg-base-100 rounded-full backdrop-blur-lg bg-opacity-60">

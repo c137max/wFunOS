@@ -1,6 +1,7 @@
+import React from "react";
 
 
-interface WindowType {
+export interface WindowType {
     id: string,
     title: string,
     icon?: React.ReactElement | string ,
@@ -15,7 +16,7 @@ interface WindowType {
     posY: number
 }
 
-interface DeskIconProps {
+export interface DeskIconProps {
     id: string,
     label: string,
     icon: React.ReactElement | string ,

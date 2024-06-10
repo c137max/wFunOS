@@ -1,13 +1,14 @@
 'use client'
 
-import {useState} from "react";
+import React, {useState} from "react";
 import Modal2 from "../components/modal2";
 import Dock from "../components/dock";
 import MyWindow from "../components/window";
 import DeskIcon from "@/components/deskIcon";
 import {BugAntIcon, ComputerDesktopIcon, MusicalNoteIcon} from "@heroicons/react/24/solid";
-import {MusicPage, TestPage, TestPage2} from "../utils/dynamicImport";
+import {MusicPage, TestPage, TestPage2} from "@/utils/dynamicImport";
 import WindowManage from "./window-manage";
+import {DeskIconProps, WindowType} from "@/types/window.d";
 
 const bgImages = [
     "https://yijhsite-1251621866.cos.ap-guangzhou.myqcloud.com/IMG_20230211_182751.jpg",
@@ -103,7 +104,7 @@ export default function Home() {
 
     return (
         <div style={{backgroundImage: ` url('${bgImages[bgImageIndex]}')`}} onClick={handleContextClicked}
-             onContextMenuCapture={e => e.preventDefault()}
+             onContextMenuCapture={handleContextMenu}
              className={`bg-cover bg-center min-h-screen p-3 rounded-lg bg-blue-50 `}>
             <div className="h-10 bg-base-100 rounded-full backdrop-blur-lg bg-opacity-60  top-0 w-full "/>
             <Modal2 isOpen={isOpen} x={position.x} y={position.y} onClick={handleMenuOnClick}></Modal2>

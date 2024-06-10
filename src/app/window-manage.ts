@@ -1,4 +1,4 @@
-
+import {DeskIconProps, WindowType} from "@/types/window.d";
 
 
 class WindowManage {
