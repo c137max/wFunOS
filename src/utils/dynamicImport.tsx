@@ -18,10 +18,12 @@ const loading = (<div className="border border-blue-300 shadow rounded-md p-4 ma
 </div>)
 
 
-
+const TestPage1 = dynamic(() => import('@/app/testForm/page'), {
+  loading: () => loading
+})
 const TestPage2 = dynamic(() => import('@/app/test/TestP2'), {
   loading: () => loading
 })
 const MusicPage =  dynamic(() => import('@/app/music/page'))
 
-export {TestPage2, MusicPage}
+export {TestPage2, MusicPage, TestPage1}

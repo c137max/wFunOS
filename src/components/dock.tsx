@@ -14,7 +14,7 @@ const renderIcon = (icon: string | undefined | ReactElement, title: string) => {
             {title.slice(0, 1)}
         </div >
     } else {
-        return <div className="w-7 h-7 rounded-full flex items-center justify-center">
+        return <div title={title} className="w-7 h-7 rounded-full flex items-center justify-center">
             {icon}
         </div>
     }

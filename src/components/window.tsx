@@ -108,7 +108,7 @@ export default function MyWindow({ children, zIndex = 1, isActive = false, isHid
                 y: 0,
                 bfX: pos.x,
                 bfY: pos.y,
-                height: window.innerWidth,
+                height: window.innerHeight,
                 width: window.innerWidth,
             })
         } else {

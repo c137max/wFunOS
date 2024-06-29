@@ -88,6 +88,15 @@ class WindowManage {
         })
     }
 
+    public isActive(id: string) {
+        for (const i of this.workQueue) {
+            if (i.id === id) {
+                return i.isActive;
+            }
+        }
+        throw new Error("ID 不存在");
+    }
+
     public setVisible(id: string, visible: boolean) {
         this.workQueue.forEach(i => {
             if (i.id === id) {
@@ -101,6 +110,14 @@ class WindowManage {
             if (i.id === id) {
                 i.isHide = !i.isHide
             } 
+        })
+    }
+
+    public setActiveRevers(id: string) {
+        this.workQueue.forEach(i => {
+            if (i.id === id) {
+                i.isActive = !i.isActive
+            }
         })
     }
 

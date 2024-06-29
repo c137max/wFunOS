@@ -6,9 +6,10 @@ import Dock from "../components/dock";
 import MyWindow from "../components/window";
 import DeskIcon from "@/components/deskIcon";
 import {BugAntIcon, ComputerDesktopIcon, MusicalNoteIcon} from "@heroicons/react/24/solid";
-import {MusicPage, TestPage2} from "@/utils/dynamicImport";
+import {MusicPage, TestPage1, TestPage2} from "@/utils/dynamicImport";
 import WindowManage from "./window-manage";
 import {DeskIconProps, WindowType} from "@/types/window.d";
+import windowManage from "./window-manage";
 
 const bgImages = [
     "https://yijhsite-1251621866.cos.ap-guangzhou.myqcloud.com/IMG_20230211_182751.jpg",
@@ -22,6 +23,7 @@ const windManage = new WindowManage();
 
 const deskIcons: DeskIconProps[] = [
     {id: '2', label: '测试', icon: <BugAntIcon/>, comp: TestPage2},
+    {id: '1', label: '测试2', icon: <BugAntIcon/>, comp: TestPage1},
     {
         id: '3', label: '音乐', icon: <MusicalNoteIcon/>, comp: MusicPage, initSetting: {
             height: 400,
@@ -78,7 +80,7 @@ export default function Home() {
     }
 
     const handleDockWorkClick = (id: string) => {
-        windManage.setActive(id);
+        windManage.setActiveRevers(id);
         windManage.setVisibleRevers(id);
         windManage.done()
     }
